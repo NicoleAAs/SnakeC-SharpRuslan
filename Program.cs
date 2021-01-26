@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake
 {
-    class Progra
+    class Program
     {
         static void Main(string[] args)
         {
