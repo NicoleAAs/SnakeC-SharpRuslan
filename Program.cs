@@ -22,7 +22,7 @@ namespace Snake
             pl2.sym = '#';
             pl2.Draw();
             
-            Console.ReadLine();
+            Coonsole.ReadLine();
         }
         
     }
