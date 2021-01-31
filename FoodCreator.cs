@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snake
 {
-    public class FoodCreator
+    class FoodCreator
     {
         int mapWidht;
         int mapHeight;
