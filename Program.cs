@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Snake
 {
@@ -47,7 +48,8 @@ namespace Snake
                }
            }
            WriteGameOver();
-           Console.ReadLine();
+           Thread.Sleep(1000); // Задержка на появление Игра окончена
+           Leader_Board name = new Leader_Board(score); // Запись имени игрока + счёта
         }
 
         static void Counter(int score) //Функция вывода на экран счёта
