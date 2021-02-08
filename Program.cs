@@ -22,6 +22,11 @@ namespace Snake
            Point food = foodCreator.CreateFood();
            food.Draw();
 
+           Params settings = new Params();
+
+           Sounds sound = new Sounds(settings.GetResourcesFolder());
+           sound.Play();
+
            
            while(true)
            {
@@ -81,6 +86,6 @@ namespace Snake
             Console.SetCursorPosition( xOffset, yOffset );
             Console.WriteLine( text );
         }
-        
+
     }
 }
