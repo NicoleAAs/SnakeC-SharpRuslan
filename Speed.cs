@@ -4,9 +4,9 @@ using System.Threading;
 
 namespace Snake
 {
-    public class Speed
+    public class Speed 
     {
-        public Speed(int score)
+        public Speed(int score) 
         {
             if (score <= 10)
             {

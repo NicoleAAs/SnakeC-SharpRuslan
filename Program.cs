@@ -7,7 +7,6 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            int score = 0; // Обьявления переменной счёт и присваивание к ней 0
             Console.SetWindowSize(90,25);
 
             Walls walls = new Walls(80, 25);
@@ -20,14 +19,16 @@ namespace Snake
            
            FoodCreator foodCreator = new FoodCreator(80, 25, '#');
            Point food = foodCreator.CreateFood();
+           Point spsfood = foodCreator.CreateSpsFood();
            food.Draw();
 
            Params settings = new Params();
-
+           
            Sounds sound = new Sounds(settings.GetResourcesFolder());
            sound.Play();
-
-           
+           Counter count = new Counter(0);
+           count.ScoreWrite();
+           Sounds soundEat = new Sounds(settings.GetResourcesFolder());
            while(true)
            {
                if (walls.IsHit(snake) || snake.IsHitTail())
@@ -38,54 +39,39 @@ namespace Snake
                {
                    food = foodCreator.CreateFood();
                    food.Draw();
-                   score++; // Евеличиваем счёт на 1 если еда съедена
-                   Counter(score);// Передаём увеличеный счёт в функцию вывода на экран
+                   count.ScoreUp();
+                   count.ScoreWrite();
+                   soundEat.PlayEat();
+                   int foodscore = count.GetScore();
+                   if (foodscore % 10 == 0)
+                   {
+                       spsfood = foodCreator.CreateSpsFood();
+                       spsfood.Draw();
+                   }
+               }
+               if (snake.Eat(spsfood))
+               {
+                   count.ScoreUpx5();
+                   count.ScoreWrite();
+                   soundEat.PlaySpsEat();
                }
                else
                {
                    snake.Move();
                }
+               int score = count.GetScore();
                Speed speed= new Speed(score); //изменение скорости при наборе определённого количества очков
+               
                if (Console.KeyAvailable)
                {
                    ConsoleKeyInfo key = Console.ReadKey();
                    snake.MandlKey(key.Key);
                }
            }
-           WriteGameOver();
+           int score1 = count.GetScore();
+           WriteGameOver gameover = new WriteGameOver();
            Thread.Sleep(1000); // Задержка на появление Игра окончена
-           Leader_Board name = new Leader_Board(score); // Запись имени игрока + счёта
+           Leader_Board name = new Leader_Board(score1, settings.GetResourcesFolder()); // Запись имени игрока + счёта
         }
-
-        static void Counter(int score) //Функция вывода на экран счёта
-        {
-            int xOffset = 80;
-            int yOffset = 22;
-            Colors colors = new Colors(score); // смена цвета в зависимости он набранных очков (так же меняеться скорость)
-            Console.SetCursorPosition( xOffset, yOffset++ );
-            WriteInt(score,xOffset,yOffset++);
-        }
-        static void WriteGameOver()
-        {
-            int xOffset = 25;
-            int yOffset = 8;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition( xOffset, yOffset++ );
-            WriteText( "============================", xOffset, yOffset++ );
-            WriteText( "И Г Р А    О К О Н Ч Е Н А", xOffset + 1, yOffset++ );
-            WriteText( "============================", xOffset, yOffset++ );
-        }
-
-        static void WriteText( String text, int xOffset, int yOffset )
-        {
-            Console.SetCursorPosition( xOffset, yOffset );
-            Console.WriteLine( text );
-        }
-        static void WriteInt( int text, int xOffset, int yOffset )
-        {
-            Console.SetCursorPosition( xOffset, yOffset );
-            Console.WriteLine( text );
-        }
-
     }
 }
