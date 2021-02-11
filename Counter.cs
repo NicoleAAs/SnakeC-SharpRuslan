@@ -19,17 +19,17 @@ namespace Snake
 
         public void ScoreUp()
         {
-            score ++;
+            score ++; //прибавляет счёт на 1 еденицу
         }
 
-        public void ScoreUpx5()
+        public void ScoreUpx3()
         {
-            score += 5;
+            score += 3; // для спец. еды (прибавляет счёт на 3 еденицы)
         }
 
         public int GetScore()
         {
-            return score;
+            return score; //получение счёта
         }
         
         public void ScoreWrite() //Функция вывода на экран счёта
@@ -39,14 +39,13 @@ namespace Snake
             int yOffset = 22;
             Colors colors = new Colors(score); // смена цвета в зависимости он набранных очков (так же меняеться скорость)
             Console.SetCursorPosition(xOffset, yOffset++);
-            WriteInt(score, xOffset, yOffset++);
+            WriteText("Score: "+score, xOffset, yOffset++);
         }
 
-        static void WriteInt(int text, int xOffset, int yOffset)
+        static void WriteText( String text, int xOffset, int yOffset )
         {
-            Console.SetCursorPosition(xOffset, yOffset);
-            Console.WriteLine(text);
+            Console.SetCursorPosition( xOffset, yOffset );
+            Console.WriteLine( text );
         }
-
     }
 }

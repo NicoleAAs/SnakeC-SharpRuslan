@@ -1,8 +1,8 @@
-Test - 5
-Test2 - 1
-Test3 - 1
-NAN - 0
-AAA - 0
-AA - 0
-aaa - 81
-AAA - 9
+Test - 5 
+Test2 - 1 
+Test3 - 1 
+NAN - 0 
+aaa - 81 
+AAA - 9 
+
+ASD - 0 
