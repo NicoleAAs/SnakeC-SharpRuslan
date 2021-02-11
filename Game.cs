@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Security;
 using System.Threading;
 
 namespace Snake
@@ -55,7 +54,7 @@ namespace Snake
                     snake.Move(); 
                 } 
                 int score = count.GetScore(); 
-                Speed speed= new Speed(score); //изменение скорости при наборе определённого количества очков
+                new Speed(score); //изменение скорости при наборе определённого количества очков
                 
                 if (Console.KeyAvailable) 
                 { 
@@ -63,12 +62,12 @@ namespace Snake
                     snake.MandlKey(key.Key); 
                 } 
             } 
-            int MaxScore = count.GetScore(); 
-            WriteGameOver gameover = new WriteGameOver(); 
+            int maxScore = count.GetScore(); 
+            new WriteGameOver(); 
             Thread.Sleep(1000); // Задержка на появление Игра окончена
-            Leader_Board name = new Leader_Board(MaxScore, settings.GetResourcesFolder()); // Запись имени игрока + счёта
-            ShowBestScores best = new ShowBestScores();
-            best.ReadFile();
+            new Leader_Board(maxScore, settings.GetResourcesFolder()); // Запись имени игрока + счёта
+            ShowBestScores best = new ShowBestScores(); 
+            best.ReadFile(); //Показ лучших игроков
         }
     }
 }
