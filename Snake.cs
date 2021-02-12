@@ -77,5 +77,20 @@ namespace Snake
                 return false;
             }
         }
+
+        internal bool BadEat(Point badFood)
+        {
+            Point head = GetNextPoint();
+            if (head.IsHit(badFood))
+            {
+                badFood.sym = head.sym;
+                plist.Add(badFood);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

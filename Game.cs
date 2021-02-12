@@ -13,9 +13,10 @@ namespace Snake
             Point p = new Point(4, 5, '*');
             Snake snake = new Snake(p, 4, Direction.RIGHT);
             snake.Draw();
-            FoodCreator foodCreator = new FoodCreator(80, 25, '#'); 
+            FoodCreator foodCreator = new FoodCreator(80, 25, '#','@','$'); 
             Point food = foodCreator.CreateFood(); 
-            Point spsfood = foodCreator.CreateSpsFood(); 
+            Point spsfood = foodCreator.CreateSpsFood();
+            Point badfood = foodCreator.CreateBadFood();
             food.Draw();
             Params settings = new Params();
             Sounds sound = new Sounds(settings.GetResourcesFolder()); 
@@ -36,11 +37,12 @@ namespace Snake
                     count.ScoreUp(); //функция повышает вчёт очков на 1
                     count.ScoreWrite(); // Выводит на экран счёт
                     soundEat.PlayEat(); // Воспроизводит звук поедания еды
-                    int foodscore = count.GetScore(); //получает счёт в данный момент времени и заносит в переменную
-                    if (foodscore % 10 == 0) //Если остаток счёта развен 0 ( то есть каждые 10 очков будет появляться спец. еда)
+                    if (count.GetScore() % 10 == 0) //Если остаток счёта развен 0 ( то есть каждые 10 очков будет появляться спец. еда) + //получает счёт в данный момент времени и заносит в переменную
                     { 
                         spsfood = foodCreator.CreateSpsFood(); //создаём спец еду
                         spsfood.Draw(); //отрисовываем спец еду
+                        badfood = foodCreator.CreateBadFood();
+                        badfood.Draw();
                     } 
                 } 
                 if (snake.Eat(spsfood)) //Если спец. еду съедают то ...
@@ -49,23 +51,28 @@ namespace Snake
                     count.ScoreWrite(); //выводим на экран увеличеный счёт
                     soundEat.PlaySpsEat(); //воспроизводим звук съедания спец. еды
                 }
+                if (snake.BadEat(badfood))
+                {
+                    count.ScoreDown();
+                    count.ScoreWrite();
+                    //soundEat.PlayBadEat();
+                }
                 else 
                 { 
                     snake.Move(); 
-                } 
-                int score = count.GetScore(); 
-                new Speed(score); //изменение скорости при наборе определённого количества очков
+                }
+                new Speed(count.GetScore()); //изменение скорости при наборе определённого количества очков
                 
                 if (Console.KeyAvailable) 
                 { 
                     ConsoleKeyInfo key = Console.ReadKey(); 
                     snake.MandlKey(key.Key); 
                 } 
-            } 
-            int maxScore = count.GetScore(); 
-            new WriteGameOver(); 
-            Thread.Sleep(1000); // Задержка на появление Игра окончена
-            new Leader_Board(maxScore, settings.GetResourcesFolder()); // Запись имени игрока + счёта
+            }
+            new WriteGameOver();
+            sound.Stop();
+            Thread.Sleep(1500); // Задержка на появление Игра окончена
+            new Leader_Board(count.GetScore(), settings.GetResourcesFolder()); // Запись имени игрока + счёта
             ShowBestScores best = new ShowBestScores(); 
             best.ReadFile(); //Показ лучших игроков
         }
