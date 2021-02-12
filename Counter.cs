@@ -43,7 +43,7 @@ namespace Snake
             int yOffset = 22;
             Colors colors = new Colors(score); // смена цвета в зависимости он набранных очков (так же меняеться скорость)
             Console.SetCursorPosition(xOffset, yOffset++);
-            WriteText("Score: "+ score, xOffset, yOffset++);
+            WriteText("Score: "+ score + " ", xOffset, yOffset++);
         }
 
         static void WriteText( String text, int xOffset, int yOffset )
