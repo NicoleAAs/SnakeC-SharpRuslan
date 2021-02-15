@@ -55,7 +55,7 @@ namespace Snake
                 {
                     count.ScoreDown();
                     count.ScoreWrite();
-                    //soundEat.PlayBadEat();
+                    soundEat.PlayBadEat();
                 }
                 else 
                 { 
