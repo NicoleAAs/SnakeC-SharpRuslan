@@ -4,7 +4,6 @@ Test3 - 1
 NAN - 0 
 aaa - 81 
 AAA - 9 
-
 ASD - 0 
 Test - 27 
  - 0 
